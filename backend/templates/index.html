@@ -1,24 +1,12 @@
 <html> 
     <head> 
-<<<<<<< HEAD
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
-=======
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
->>>>>>> 88b46904c3ecdc9d0ec0e5d5bb0ad76067570221
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="/static/style.css">
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     </head>
     
     <body> 
         <script src="/static/script.js"></script>
-          <div ng-app="myShoppingList" ng-controller="myCtrl">
-            <ul>
-              <li ng-repeat="x in products">[[x]] <span ng-click="removeItem($index)">×</span></li>
-            </ul>
-            <input ng-model="addMe">
-            <button ng-click="addItem()">Add</button>
-            <p>{{errortext}}</p>
-          </div>
         
         <div class="top-navigation"> 
             <ul class="top-nav"> 
@@ -32,16 +20,14 @@
 
 
         <!-- this is the dynamic content --> 
-        <div class="list-element"> 
-            <p class="item"> 5 Oranges</p>
-            <p class="date"> Monday, April 5th</p>
+        <div ng-app="inventory" ng-controller="myCtrl">
+            <div class="list-element" ng-repeat="(food, qty) in data"> 
+                <p class="item">[[qty]] [[food]]</p>
+                <p class="date"> Monday, April 5th</p>
+            </div>
         </div>
-        <!-- this is the dynamic content --> 
         
-         <div class="list-element"> 
-            <p class="item"> 5 Oranges</p>
-            <p class="date"> Monday, April 5th</p>
-        </div>
+        <!-- this is the dynamic content --> 
         
         <div class="bottom-nav">
             <ul> 

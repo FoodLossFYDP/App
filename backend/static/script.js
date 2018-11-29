@@ -1,4 +1,4 @@
-var app = angular.module("myShoppingList", [], function ($interpolateProvider) {
+var app = angular.module("inventory", [], function ($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });
