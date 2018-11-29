@@ -1,36 +1,20 @@
 <html> 
     <head> 
-<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="../static/style.css">
-=======
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
->>>>>>> 88b46904c3ecdc9d0ec0e5d5bb0ad76067570221
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
     </head>
     
     <body> 
-        <script src="/static/script.js"></script>
-          <div ng-app="myShoppingList" ng-controller="myCtrl">
-            <ul>
-              <li ng-repeat="x in products">[[x]] <span ng-click="removeItem($index)">×</span></li>
-            </ul>
-            <input ng-model="addMe">
-            <button ng-click="addItem()">Add</button>
-            <p>{{errortext}}</p>
-          </div>
         
         <div class="top-navigation"> 
             <ul class="top-nav"> 
-                <li class="top-nav-item active-list"> <a class="active" href=""> INVENTORY</a></li>
-                <li class="top-nav-item"> <a href="transactions.html"> TRANSACTIONS</a> </li>
+                <li class="top-nav-item"> <a href="index.html"> INVENTORY</a></li>
+                <li class="top-nav-item active-list"> <a href="transactions.html" class="active"> TRANSACTIONS</a> </li>
             </ul>
         </div>
         
         
-
-
-
         <!-- this is the dynamic content --> 
         <div class="list-element"> 
             <p class="item"> 5 Oranges</p>
@@ -45,6 +29,9 @@
         
         <div class="bottom-nav">
             <ul> 
+                <li class="bottom-nav-element"> <a href=""> </a> <img src=""> FRIDGE </li>
+                <li class="bottom-nav-element"> <a href=""> </a> <img src=""> SHOPPING </li>
+                <li class="bottom-nav-element"> <a href=""> </a> <img src=""> FRIDGE </li>
                 <li class="bottom-nav-element"> <a href=""> </a> <img src=""> FRIDGE </li>
             </ul>
         </div>

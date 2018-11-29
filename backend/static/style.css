@@ -23,3 +23,37 @@
     margin: 0; 
     margin-top: 11px; 
 }
+
+.top-navigation{ 
+    height: 55px; 
+    width: 100%; 
+    padding-top: 15px; 
+}
+
+.top-nav{ 
+    list-style: none;
+}
+
+.top-nav-item{ 
+    font-family: "Roboto"; 
+    font-size: 12px;  
+    display:inline-block;
+    vertical-align: top;
+    width: 40%; 
+    
+}
+
+.top-nav-item a{ 
+    text-decoration: none; 
+}
+
+
+.active {
+    color: #FFA520; 
+}
+
+.active-list { 
+     border-bottom: 2px solid #FFA520;
+    outline-offset: -10px;
+}
+
