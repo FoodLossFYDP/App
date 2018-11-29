@@ -9,7 +9,7 @@ inventory = {}
 @app.route("/", methods=['GET'])
 def main():
     pass
-    #return render_template('index.html')
+    return render_template('index.html')
 
 @app.route("/inventory", methods=['GET'])
 def get_inventory():
