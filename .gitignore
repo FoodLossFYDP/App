@@ -1,1 +1,5 @@
 venv/
+lib/
+appengine_config.py
+appengine_config.pyc
+main.pyc
