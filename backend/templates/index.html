@@ -1,13 +1,13 @@
 <html> 
     <head> 
-      <link rel="stylesheet" type="text/css" href="/static/style.css">
-      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+       <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
     </head>
     
     <body> 
         <script src="/static/script.js"></script>
-        
         <div class="top-navigation"> 
             <ul class="top-nav"> 
                 <li class="top-nav-item active-list"> <a class="active" href=""> INVENTORY</a></li>
@@ -16,9 +16,6 @@
         </div>
         
         
-
-
-
         <!-- this is the dynamic content --> 
         <div ng-app="inventory" ng-controller="myCtrl">
             <div class="list-element" ng-repeat="(food, qty) in data"> 
@@ -27,10 +24,11 @@
             </div>
         </div>
         
-        <!-- this is the dynamic content --> 
-        
         <div class="bottom-nav">
             <ul> 
+                <li class="bottom-nav-element"> <a href=""> </a> <img src=""> FRIDGE </li>
+                <li class="bottom-nav-element"> <a href=""> </a> <img src=""> SHOPPING </li>
+                <li class="bottom-nav-element"> <a href=""> </a> <img src=""> FRIDGE </li>
                 <li class="bottom-nav-element"> <a href=""> </a> <img src=""> FRIDGE </li>
             </ul>
         </div>
