@@ -6,6 +6,7 @@
     padding-top: 11px; 
     padding-bottom: 11px; 
     padding-left: 25px; 
+    width: 150px; 
 
 }
 
@@ -27,7 +28,8 @@
 .top-navigation{ 
     height: 55px; 
     width: 100%; 
-    padding-top: 15px; 
+    padding-top: 75px;
+    height: 150px; 
 }
 
 .top-nav{ 
@@ -61,7 +63,7 @@
     width: 100%; 
     padding: 0; 
     margin: 0; 
-    height: 63px; 
+    height: 150px; 
     bottom: 0; 
     position: absolute; 
     
