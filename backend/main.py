@@ -19,24 +19,28 @@ def get_inventory():
 def update_inventory():
     content = json.loads(request.data)
     food_item = content['queryResult']['parameters']['food']
-    food_quantity = content['queryResult']['parameters']['number']
+    food_quantity = None
+    food_quantity_ambiguous = None
     action = content['queryResult']['parameters']['action']
-    food_quantity_ambiguous = content['queryResult']['parameters']['amount']
+    if 'number' in content['queryResult']['parameters'].keys():
+        food_quantity = content['queryResult']['parameters']['number']
+    if 'amount' in content['queryResult']['parameters'].keys():
+        food_quantity_ambiguous = content['queryResult']['parameters']['amount']
 
     logging.info(food_item)
     logging.info(food_quantity)
     logging.info(action)
-    if food_quantity_ambiguous != "" and (action == 'insert' or action == 'remove'):
+    if food_quantity_ambiguous != None and (action == 'insert' or action == 'remove'):
         inventory[food_item] = ""
-
-    if food_item in inventory and action == 'insert':
-        new_quantity = inventory[food_item] + food_quantity
-        inventory[food_item] = new_quantity
-    elif food_item in inventory and action == 'remove':
-        new_quantity = inventory[food_item] - food_quantity
-        inventory[food_item] = new_quantity
     else:
-        inventory[food_item] = food_quantity
+        if food_item in inventory and action == 'insert':
+            new_quantity = inventory[food_item] + food_quantity
+            inventory[food_item] = new_quantity
+        elif food_item in inventory and action == 'remove':
+            new_quantity = inventory[food_item] - food_quantity
+            inventory[food_item] = new_quantity
+        else:
+            inventory[food_item] = food_quantity
     logging.info(inventory)
     return json.dumps({'speech': 'Thank you.', 'type': 0}), 200, {'ContentType':'application/json'}
 
