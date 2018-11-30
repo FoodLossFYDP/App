@@ -10,7 +10,7 @@ app.controller("myCtrl", function ($scope, $http, $timeout) {
     var getData = function () {
         let test = 'http://localhost:8080/inventory';
         let prod = 'https://fydp-8a3f6.appspot.com/inventory';
-        $http.get(test)
+        $http.get(prod)
             .then(function (res) {
                 console.log(res);
                 $scope.data = res.data;
