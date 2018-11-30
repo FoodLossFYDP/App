@@ -39,14 +39,12 @@
     font-size: 12px;  
     display:inline-block;
     vertical-align: top;
-    width: 40%; 
-    
+    width: 48%; 
 }
 
 .top-nav-item a{ 
     text-decoration: none; 
 }
-
 
 .active {
     color: #FFA520; 
@@ -57,3 +55,40 @@
     outline-offset: -10px;
 }
 
+.bottom-nav { 
+    background-color: red; 
+    list-style: none; 
+    width: 100%; 
+    padding: 0; 
+    margin: 0; 
+    height: 63px; 
+    bottom: 0; 
+    position: absolute; 
+    
+}
+
+
+.bottom-nav-element { 
+    font-family: "Roboto"; 
+    font-size: 12px; 
+    list-style: none; 
+    background-color: green; 
+    width: 24%; 
+    padding: 0; 
+    margin: 0; 
+    display: inline-block; 
+}
+
+
+
+
+
+
+
+/* IPHONE SHIT */ 
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: lightblue;
+    }
+}
