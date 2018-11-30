@@ -23,15 +23,17 @@ def update_inventory():
     food_quantity_ambiguous = None
     action = content['queryResult']['parameters']['action']
     if 'number' in content['queryResult']['parameters'].keys():
-        food_quantity = content['queryResult']['parameters']['number']
+        food_quantity = content['queryResult']['parameters']['number'] if content['queryResult']['parameters']['number'] != "" else None
     if 'amount' in content['queryResult']['parameters'].keys():
-        food_quantity_ambiguous = content['queryResult']['parameters']['amount']
+        food_quantity_ambiguous = content['queryResult']['parameters']['amount'] if content['queryResult']['parameters']['amount'] != "" else None
 
     logging.info(food_item)
     logging.info(food_quantity)
     logging.info(action)
-    if food_quantity_ambiguous != None and (action == 'insert' or action == 'remove'):
+    if food_quantity_ambiguous == 'some' and action == 'insert':
         inventory[food_item] = ""
+    elif food_quantity_ambiguous == 'all' and action == 'remove':
+        inventory.pop(food_item, None)
     else:
         if food_item in inventory and action == 'insert':
             new_quantity = inventory[food_item] + food_quantity
