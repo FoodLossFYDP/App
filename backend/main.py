@@ -8,12 +8,15 @@ inventory = {}
 
 @app.route("/", methods=['GET'])
 def main():
-    pass
     return render_template('index.html')
 
 @app.route("/inventory", methods=['GET'])
 def get_inventory():
     return json.dumps(inventory), 200, {'ContentType':'application/json'}
+
+@app.route("/transactions", methods=['GET'])
+def get_transactions():
+    return render_template('transactions.html')
 
 @app.route("/update", methods=['POST'])
 def update_inventory():
