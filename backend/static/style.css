@@ -38,6 +38,7 @@
 
 .top-nav-item{ 
     font-family: "Roboto"; 
+    font-weight: 600; 
     font-size: 12px;  
     display:inline-block;
     vertical-align: top;
@@ -50,6 +51,7 @@
 
 .active {
     color: #FFA520; 
+    font-weight: 600;
 }
 
 .active-list { 
@@ -58,7 +60,6 @@
 }
 
 .bottom-nav { 
-    background-color: red; 
     list-style: none; 
     width: 100%; 
     padding: 0; 
@@ -66,31 +67,20 @@
     height: 150px; 
     bottom: 0; 
     position: absolute; 
-    
+    background-color: red; 
 }
 
 
 .bottom-nav-element { 
-    font-family: "Roboto"; 
-    font-size: 12px; 
-    list-style: none; 
+    font-family: "Roboto"
     background-color: green; 
+    font-size: 12px; 
+    list-style: none;  
     width: 24%; 
     padding: 0; 
     margin: 0; 
     display: inline-block; 
+    margin: 75px; 
 }
 
 
-
-
-
-
-
-/* IPHONE SHIT */ 
-
-@media only screen and (max-width: 600px) {
-    body {
-        background-color: lightblue;
-    }
-}
