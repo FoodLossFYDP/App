@@ -1,13 +1,12 @@
-# WebappFrontend
-Frontend
+# Base Repo for Ambr
 
-Features:
--Inventory Tracking
--Corrections
--Removing
--Expiry indication  
--Grocery List 
--Easy add 
--Habit Tracking 
--Recommendations on how to handle expired food 
--Recommendation on food to make
+### Frontend
+React
+
+
+### Backend
+Python + Flask
+
+
+### Data
+MongoDB
