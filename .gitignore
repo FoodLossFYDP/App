@@ -4,3 +4,4 @@ backend/appengine_config.py
 backend/appengine_config.pyc
 backend/main.pyc
 backend/app.yaml
+backend/config.json

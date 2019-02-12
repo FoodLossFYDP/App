@@ -5,14 +5,24 @@ echo Running backend build
 AMBR_PATH="./frontend/ambr"
 FLASK_PATH="./backend"
 
+if [ ! -f $FLASK_PATH/config.json ]
+then
+    echo Enter mongo username
+    read username
+    echo Enter mongo password
+    read password 
+    
+    touch $FLASK_PATH/config.json
+    echo "{\n\t\"mongo_user\": \"$username\",\n\t\"mongo_password\": \"$password\"\n}" > $FLASK_PATH/config.json
+else
+    echo Config file exists...
+fi
+
 cd $AMBR_PATH
 npm run build
 cd ../..
 
-# for file in $AMBR_PATH/build/static/*;
-# do 
-# cp -v "$file" $FLASK_PATH/static/"${file%.csv}"
-# done 
+
 
 cp -va $AMBR_PATH/build/static/. $FLASK_PATH/static/
 
