@@ -17,6 +17,7 @@
 ### Frontend
 React
 
+Add styles using jss. 
 
 ### Backend
 Python + Flask
