@@ -1,0 +1,9 @@
+.Navbar {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.NavbarAction {
+    font-size: 0.7rem;
+}
