@@ -21,6 +21,7 @@ class AmbrNavigation extends React.Component {
 
   handleChange = (event, value) => {
     this.setState({ value });
+    console.log(value);
   };
 
   render() {
@@ -34,10 +35,10 @@ class AmbrNavigation extends React.Component {
         showLabels
         className={`classes.root Navbar`}
       >
-        <BottomNavigationAction label="Inventory" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="Fridge" icon={<RestoreIcon />} />
         <BottomNavigationAction label="Shopping List" icon={<FavoriteIcon /> } />
         <BottomNavigationAction label="Recipes" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Dashboard" icon={<LocationOnIcon />} />
+        <BottomNavigationAction label="Settings" icon={<LocationOnIcon />} />
       </BottomNavigation>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Navigation from './navigation/navbar.js'
+import Navigation from './navigation/navbar.js';
 import logo from './logo.svg';
+import Inventory from './inventory/inventory.js';
 import './App.css';
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
             Learn React
           </a>
         </header> */}
+        <Inventory />
         <Navigation />
       </div>
     );
