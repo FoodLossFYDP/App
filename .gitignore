@@ -5,3 +5,5 @@ backend/appengine_config.pyc
 backend/main.pyc
 backend/app.yaml
 backend/config.json
+backend/static/
+backend/templates/

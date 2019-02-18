@@ -23,9 +23,10 @@ npm run build
 cd ../..
 
 
-rm -rf $FLASK_PATH/static/*
+rm -r $FLASK_PATH/static/
 cp -va $AMBR_PATH/build/static/. $FLASK_PATH/static/
 
-rm -rf $FLASK_PATH/templates/*
-cp -v $AMBR_PATH/build/index.html $FLASK_PATH/templates/index.html
+rm -r $FLASK_PATH/templates/
+mkdir $FLASK_PATH/templates/
+cp -va $AMBR_PATH/build/index.html $FLASK_PATH/templates/
 
