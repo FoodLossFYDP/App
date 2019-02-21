@@ -10,9 +10,18 @@ const styles = theme => ({
 });
 
 class Inventory extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mode: 0
+        };
+    };
+
     render () {
         return (
-            <InventoryTabs />
+            <div>
+                <InventoryTabs />
+            </div>
         );
     }
 }

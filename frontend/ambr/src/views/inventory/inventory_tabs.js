@@ -6,10 +6,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import InventoryList from './inventory_list.js';
 
 function TabContainer({ children, dir }) {
   return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+    <Typography component="div" dir={dir} >
       {children}
     </Typography>
   );
@@ -22,8 +23,11 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
     width: 500,
+  },
+  barBackground: {
+    backgroundColor: '#fff',
+    boxShadow: '0 0 0 0'
   },
 });
 
@@ -45,7 +49,7 @@ class InventoryTabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" classes={{root: classes.barBackground}}>
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
@@ -62,7 +66,7 @@ class InventoryTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>Inventory</TabContainer>
+          <TabContainer dir={theme.direction}><InventoryList /></TabContainer>
           <TabContainer dir={theme.direction}>Transactions</TabContainer>
         </SwipeableViews>
       </div>

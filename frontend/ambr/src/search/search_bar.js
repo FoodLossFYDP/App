@@ -1,60 +1,93 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
-  container: {
+  root: {
+    width: '500px',
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  title: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: '#ECECEC',
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit,
+      width: 'auto',
+    },
+    marginRight: '10px',
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
     display: 'flex',
-    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
   },
-  dense: {
-    marginTop: 16,
-  },
-  menu: {
-    width: 200,
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 120,
+      '&:focus': {
+        width: 200,
+      },
+    },
   },
 });
 
-class SearchBar extends React.Component {
-  state = {
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled'
-  };
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-          id="outlined-search"
-          label="Search field"
-          type="search"
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-        />
-      </form>
-    );
-  }
+function SearchAppBar(props) {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+        <Toolbar>
+        <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+            />
+          </div>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+            <MenuIcon />
+          </IconButton>        
+        </Toolbar>
+    </div>
+  );
 }
 
-SearchBar.propTypes = {
+SearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SearchBar);
+export default withStyles(styles)(SearchAppBar);
