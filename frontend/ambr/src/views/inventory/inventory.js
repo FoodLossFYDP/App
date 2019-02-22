@@ -1,6 +1,7 @@
 import React from 'react';
 import InventoryTabs from './inventory_tabs.js';
 import { withStyles } from '@material-ui/core/styles';
+import { getInventory } from '../../requests/fetch_inventory.js';
 
 const styles = theme => ({
     root: {
@@ -12,6 +13,8 @@ const styles = theme => ({
 class Inventory extends React.Component {
     constructor(props) {
         super(props);
+        const inventoryItems = getInventory();
+        console.log(inventoryItems);
         this.state = {
             mode: 0
         };

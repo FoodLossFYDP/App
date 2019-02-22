@@ -43,6 +43,7 @@ class GroceryList extends React.Component {
 
     return (
       <List className={classes.root}>
+      {/*array of list items will be mapped instead*/}
         {[0, 1, 2, 3].map(value => (
             <div>
           <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
