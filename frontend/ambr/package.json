@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-draggable": "^3.2.1",
     "react-scripts": "^2.1.5",
     "react-swipeable-views": "^0.13.1"
   },

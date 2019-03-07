@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import SendIcon from '@material-ui/icons/Send';
-import StarBorder from '@material-ui/icons/StarBorder';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Divider } from '@material-ui/core';
+import blue from '@material-ui/core/colors/blue';
+import ItemDialog from './food-item/item.js';
+import {items} from '../../config.js';
+import Draggable from 'react-draggable';
 
 const styles = theme => ({
   root: {
@@ -33,60 +30,67 @@ const styles = theme => ({
       fontWeight: 300,
       paddingBottom: '1rem',
       textAlign: 'right',
+  },
+  avatar: {
+    backgroundColor: blue[100],
+    color: blue[600],
   }
 });
 
 class InventoryList extends React.Component {
   state = {
-    open: true,
+    open: false,
+    currentItem: {},
+    listItemPosition: {x:0,y:0}
   };
 
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
+  handleClickOpen = (value) => {
+    console.log(value);
+    this.setState({ open: true, currentItem: value });
   };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  removeItem = (item, index) => {
+    items.splice(index, index + 1);
+    // update master object
+    // send delete request
+  }
+
+  handleDragStop = (val, item, index) => {
+    if (val.changedTouches[0].clientX > 350) {
+      this.removeItem(item,index);
+    } else {
+      this.setState({listItemPosition: {x:0,y:0}})
+    }
+
+  }
 
   render() {
     const { classes } = this.props;
-
     return (
       <List
         component="nav"
         className={classes.root}
       >
         {/* Reapeat these for each item in the inventory */}
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="5 Oranges" secondary="Added Monday, November 15"/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="10 Apples" secondary="Added Monday, November 15"/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="Added Yesterday" classes={{primary: classes.listDateText}}/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="Cilantro ~0.5lb" secondary="Added Sunday, November 14"/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="1 Head of Broccoli" secondary="Added Sunday, November 14"/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="1 Plate of Butter Chicken" secondary="Added Sunday, November 14"/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="Added 2 Days Ago" classes={{primary: classes.listDateText}}/>
-        </ListItem>
-        <Divider />
-        <ListItem button classes={{root: classes.listItem}}>
-          <ListItemText primary="1 Bottle of Orange Juice" secondary="Added Sunday, November 13"/>
-          <ListItemText primary="Expired" classes={{primary: classes.listItemExpiredText}}/>
-        </ListItem>
-        <Divider />
+        {items.map((inventoryItem,index) => (
+          <div>
+            <Draggable
+              axis='x'
+              onStop={val => this.handleDragStop(val, inventoryItem, index)}
+              position={{x:0,y:0}}>
+              <ListItem button classes={{root: classes.listItem}} onClick={() => this.handleClickOpen(inventoryItem)}>
+                <ListItemText primary={inventoryItem.qty + " " + inventoryItem.item} secondary={inventoryItem.dateUpdated}/>
+              </ListItem>
+            </Draggable>
+            <Divider />
+          </div>
+        ))
+        }
+        <ItemDialog selectedValue={this.state.open} itemValue={this.state.currentItem} onClose={this.handleClose}></ItemDialog>
       </List>
     );
   }

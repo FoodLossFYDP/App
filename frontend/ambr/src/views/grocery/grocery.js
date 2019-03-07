@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import { Divider } from '@material-ui/core';
+import InputBase from '@material-ui/core/InputBase';
 
 const styles = theme => ({
   root: {
@@ -46,24 +47,22 @@ class GroceryList extends React.Component {
       {/*array of list items will be mapped instead*/}
         {[0, 1, 2, 3].map(value => (
             <div>
-          <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
+          <ListItem key={value} role={undefined} dense >
             <Checkbox
               checked={this.state.checked.indexOf(value) !== -1}
               tabIndex={-1}
               disableRipple
+              button 
+              onClick={this.handleToggle(value)}
             />
-            <ListItemText primary={`Line item ${value + 1}`} />
-            <ListItemSecondaryAction>
-              <IconButton aria-label="Comments">
-                <CommentIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-            
+            <InputBase className={classes.margin} defaultValue={`Line item ${value + 1}`}  />
+           
           </ListItem>
           <Divider />
           </div>
         ))}
       </List>
+      
     );
   }
 }

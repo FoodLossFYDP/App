@@ -3,7 +3,6 @@ import Navigation from './navigation/navbar.js';
 import logo from './logo.svg';
 import ViewContainer from './views/view_container.js';
 import './App.css';
-
 class App extends Component {
   constructor(props){
     super(props);
