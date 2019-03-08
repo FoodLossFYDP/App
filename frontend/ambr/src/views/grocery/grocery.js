@@ -8,10 +8,11 @@ import { Divider } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import { groceryItems } from '../../prototype_config/config.js';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
-    width: 500,
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
   textField: {
@@ -24,6 +25,18 @@ const styles = theme => ({
   formContainer: {
     textAlign: 'left',
     paddingLeft: '25px',
+  },
+  addItemButton: {
+    float: 'bottom',
+    alignSelf: 'center',
+    width: '50%',
+    marginTop: '200px',
+  },
+  groceryContainer: {
+    height: '100%'
+  },
+  lastItem: {
+    color: '#c4c2c2'
   }
 });
 
@@ -91,30 +104,35 @@ class GroceryList extends React.Component {
     const { classes } = this.props;
 
     return (
-      <List className={classes.root}>
-      {/*array of list items will be mapped instead*/}
-        {this.state.groceryList.map((value, index) => (
-            <div>
-          <ListItem key={value.id} role={undefined} dense >
-            <Checkbox
-              checked={value.checked}
-              tabIndex={-1}
-              disableRipple
-              button 
-              onClick={this.handleToggle(index)}
-            />
-            <InputBase className={classes.margin} 
-              value={value.name}  
-              defaultValue="Add new food item"
-              onChange={this.handleItemChange(index)}
-              onClick={() => this.handleClick(index)}
-              autoFocus={this.state.focusedItem == index}
-            />
-          </ListItem>
-          <Divider />
-          </div>
-        ))}
-      </List>
+      <div className={`${classes.groceryContainer}`}>
+        <List className={classes.root}>
+          {this.state.groceryList.map((value, index) => (
+              <div>
+            <ListItem key={value.id} role={undefined} dense >
+              <Checkbox
+                className={`${index==this.state.groceryList.length -1 && classes.lastItem}`}
+                checked={value.checked}
+                tabIndex={-1}
+                disableRipple
+                button 
+                onClick={this.handleToggle(index)}
+              />
+              <InputBase className={`${classes.margin} ${index==this.state.groceryList.length -1 && classes.lastItem}`} 
+                value={value.name}  
+                defaultValue="Add new food item"
+                onChange={this.handleItemChange(index)}
+                onClick={() => this.handleClick(index)}
+                autoFocus={this.state.focusedItem == index}
+              />
+            </ListItem>
+            <Divider />
+            </div>
+          ))}
+        </List>
+        {/* <Button variant="contained" color="primary" className={`${classes.button} ${classes.addItemButton}`}>
+          Add to Inventory
+        </Button> */}
+      </div>
     );
   }
 }

@@ -13,7 +13,7 @@ import { recipeItems } from '../../prototype_config/config.js';
 
 const styles = {
   card: {
-    width: 455,
+    width: '92%',
   },
   media: {
     height: 140,
@@ -40,7 +40,7 @@ class RecipeCard extends React.Component {
         <div>
         {recipeItems.map(recipeItem => ( 
             <Card className={classes.card}>
-                <CardActionArea>
+                <CardActionArea onClick={() => this.handleClickOpen(recipeItem.recipe)}>
                     <CardMedia
                     className={classes.media}
                     image={recipeItem.imageUrl}

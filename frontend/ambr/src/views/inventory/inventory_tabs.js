@@ -23,11 +23,12 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    width: 500,
+    width: '100%',
   },
   barBackground: {
     backgroundColor: '#fff',
-    boxShadow: '0 0 0 0'
+    boxShadow: '0 0 0 0',
+    width: '100%'
   },
 });
 

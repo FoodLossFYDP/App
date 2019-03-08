@@ -6,7 +6,7 @@ import { getRecipies } from '../../requests/fetch_recipes.js';
 const styles = theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        width: 500,
+        width: '100%',
     },
     recipesContainer: {
         paddingLeft: '1em',

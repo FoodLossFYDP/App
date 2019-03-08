@@ -6,7 +6,7 @@ import { getInventory } from '../../requests/fetch_inventory.js';
 const styles = theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        width: 500,
+        width: '100%',
     },
 });
 

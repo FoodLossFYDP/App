@@ -11,7 +11,7 @@ import './navbar.css';
 
 const styles = {
   root: {
-    width: 500
+    width: '100%'
   },
 };
 
@@ -37,7 +37,7 @@ class AmbrNavigation extends React.Component {
         className={`classes.root Navbar`}
       >
         <BottomNavigationAction label="Fridge" icon={<KitchenOutlinedIcon />} />
-        <BottomNavigationAction label="Shopping List" icon={<ShoppingBasketOutlinedIcon /> } />
+        <BottomNavigationAction label="Groceries" icon={<ShoppingBasketOutlinedIcon /> } />
         <BottomNavigationAction label="Recipes" icon={<RoomServiceOutlinedIcon />} />
         <BottomNavigationAction label="Settings" icon={<SettingsOutlinedIcon />} />
       </BottomNavigation>

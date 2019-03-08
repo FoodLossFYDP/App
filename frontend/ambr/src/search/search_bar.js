@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root: {
-    width: '500px',
+    width: '100%',
   },
   grow: {
     flexGrow: 1,
