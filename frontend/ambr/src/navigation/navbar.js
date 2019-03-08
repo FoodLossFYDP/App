@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import KitchenOutlinedIcon from '@material-ui/icons/KitchenOutlined';
+import RoomServiceOutlinedIcon from '@material-ui/icons/RoomServiceOutlined';
+import ShoppingBasketOutlinedIcon from '@material-ui/icons/ShoppingBasketOutlined';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import './navbar.css';
 
 const styles = {
@@ -35,10 +36,10 @@ class AmbrNavigation extends React.Component {
         showLabels
         className={`classes.root Navbar`}
       >
-        <BottomNavigationAction label="Fridge" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Shopping List" icon={<FavoriteIcon /> } />
-        <BottomNavigationAction label="Recipes" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Settings" icon={<LocationOnIcon />} />
+        <BottomNavigationAction label="Fridge" icon={<KitchenOutlinedIcon />} />
+        <BottomNavigationAction label="Shopping List" icon={<ShoppingBasketOutlinedIcon /> } />
+        <BottomNavigationAction label="Recipes" icon={<RoomServiceOutlinedIcon />} />
+        <BottomNavigationAction label="Settings" icon={<SettingsOutlinedIcon />} />
       </BottomNavigation>
     );
   }

@@ -3,40 +3,47 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
 import { Divider } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
+import { groceryItems } from '../../prototype_config/config.js';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
     width: 500,
     backgroundColor: theme.palette.background.paper,
   },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+    marginTop: '0px',
+    width: '435px'
+  },
+  formContainer: {
+    textAlign: 'left',
+    paddingLeft: '25px',
+  }
 });
 
 class GroceryList extends React.Component {
   state = {
-    checked: [0],
+    stateChanged: false,
+    newFoodItem: "",
+    newFoodItemChecked: false
   };
 
-  handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  handleToggle = i => () => {
+    console.log(i);
+    Object.assign(groceryItems[i], {checked: !groceryItems[i].checked});
+    this.setState({stateChanged: !this.state.stateChanged});
+    console.log(groceryItems[i]);
+  };
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked,
-    });
+  handleNewItem = name => event => {
+    this.setState({ newFoodItem: event.target.value });
+    console.log(event.target.value );
   };
 
   render() {
@@ -45,24 +52,39 @@ class GroceryList extends React.Component {
     return (
       <List className={classes.root}>
       {/*array of list items will be mapped instead*/}
-        {[0, 1, 2, 3].map(value => (
+        {groceryItems.map((value, index) => (
             <div>
-          <ListItem key={value} role={undefined} dense >
+          <ListItem key={value.id} role={undefined} dense >
             <Checkbox
-              checked={this.state.checked.indexOf(value) !== -1}
+              checked={value.checked}
               tabIndex={-1}
               disableRipple
               button 
-              onClick={this.handleToggle(value)}
+              onClick={this.handleToggle(index)}
             />
-            <InputBase className={classes.margin} defaultValue={`Line item ${value + 1}`}  />
-           
+            <InputBase className={classes.margin} defaultValue={value.name}  />
+          
           </ListItem>
           <Divider />
           </div>
         ))}
+        {/* Programmatically add the code below
+        TODO: update groceryList once typing begins, add a new checkbox */}
+        <ListItem key={"new"} role={undefined} dense >
+            <Checkbox
+              checked={this.state.newFoodItemChecked}
+              tabIndex={-1}
+              disableRipple
+              button 
+              onClick={this.handleToggle("new")}
+            />
+            <InputBase className={classes.margin} 
+              defaultValue="Add new food item"
+              value={this.state.newFoodItem}
+              onChange={this.handleNewItem('name')} />
+        </ListItem>
+        <Divider />
       </List>
-      
     );
   }
 }

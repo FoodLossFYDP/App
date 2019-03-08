@@ -68,7 +68,7 @@ class InventoryTabs extends React.Component {
         >
           <TabContainer dir={theme.direction}><InventoryList /></TabContainer>
           <TabContainer dir={theme.direction}>Transactions</TabContainer>
-        </SwipeableViews>
+        </SwipeableViews> 
       </div>
     );
   }

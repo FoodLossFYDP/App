@@ -5,6 +5,7 @@ import SearchBar from '../search/search_bar.js';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
+import Recipe from './recipes/recipes_view.js';
 
 const styles = theme => ({
     button: {
@@ -27,7 +28,7 @@ class ViewContainer extends React.Component {
         return (
             <div>
                 <SearchBar />
-                {view == 0 && <Inventory /> || view == 1 && <GroceryList />}
+                {view == 0 && <Inventory /> || view == 1 && <GroceryList /> || view == 2 && <Recipe />}
             </div>
         );
     }

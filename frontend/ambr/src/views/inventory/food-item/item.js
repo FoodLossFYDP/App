@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 const styles = theme => ({
     avatar: {
       backgroundColor: blue[100],
@@ -55,7 +54,7 @@ class ItemDialog extends React.Component {
         >
             <DialogContent>
                 <h1 className={`${classes.dialogTitle} ${classes.dialogText}`}>{value.qty + " " + value.item}</h1>
-                <p className={`${classes.dialogExpiry} ${classes.dialogText}`}>Expiring Soon</p>
+                {value.expiringSoon && <p className={`${classes.dialogExpiry} ${classes.dialogText}`}>Expiring Soon</p>}
                 <p className={`${classes.dialogEntryDate} ${classes.dialogText}`}>{value.dateUpdated}</p>
                 {
                     value.uncertainQty && 

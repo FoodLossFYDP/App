@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Divider } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 import ItemDialog from './food-item/item.js';
-import {items} from '../../config.js';
+import {inventoryItems} from '../../prototype_config/config.js';
 import Draggable from 'react-draggable';
 
 const styles = theme => ({
@@ -54,13 +54,13 @@ class InventoryList extends React.Component {
   };
 
   removeItem = (item, index) => {
-    items.splice(index, index + 1);
+    inventoryItems.splice(index, index + 1);
     // update master object
     // send delete request
   }
 
   handleDragStop = (val, item, index) => {
-    if (val.changedTouches[0].clientX > 350) {
+    if (val.changedTouches && val.changedTouches[0].clientX > 350) {
       this.removeItem(item,index);
     } else {
       this.setState({listItemPosition: {x:0,y:0}})
@@ -76,12 +76,13 @@ class InventoryList extends React.Component {
         className={classes.root}
       >
         {/* Reapeat these for each item in the inventory */}
-        {items.map((inventoryItem,index) => (
+        {inventoryItems.map((inventoryItem,index) => (
           <div>
             <Draggable
               axis='x'
               onStop={val => this.handleDragStop(val, inventoryItem, index)}
-              position={{x:0,y:0}}>
+              position={{x:0,y:0}}
+              bounds={{left: 0}}>
               <ListItem button classes={{root: classes.listItem}} onClick={() => this.handleClickOpen(inventoryItem)}>
                 <ListItemText primary={inventoryItem.qty + " " + inventoryItem.item} secondary={inventoryItem.dateUpdated}/>
               </ListItem>
