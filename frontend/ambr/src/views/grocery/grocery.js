@@ -30,7 +30,7 @@ const styles = theme => ({
 class GroceryList extends React.Component {
   state = {
     stateChanged: false,
-    newFoodItem: "",
+    newFoodItem: null,
     newFoodItemChecked: false
   };
 
@@ -81,7 +81,8 @@ class GroceryList extends React.Component {
             <InputBase className={classes.margin} 
               defaultValue="Add new food item"
               value={this.state.newFoodItem}
-              onChange={this.handleNewItem('name')} />
+              onChange={this.handleNewItem('name')} 
+              onClick={() => (this.state.newFoodItem == null && this.setState({newFoodItem: ""}))}/>
         </ListItem>
         <Divider />
       </List>
