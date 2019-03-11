@@ -22,7 +22,7 @@ class App extends Component {
             this.state.view == 0 && "Inventory" || 
             this.state.view == 1 && "Grocery List" || 
             this.state.view == 2 && "Recipes" ||
-            this.state.view == 3 && "Settings"
+            this.state.view == 3 && "Dashboard"
           }
         </h2>
         <ViewContainer view={this.state.view}/>

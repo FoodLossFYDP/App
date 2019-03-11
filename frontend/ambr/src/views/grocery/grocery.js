@@ -6,9 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Divider } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
-import { groceryItems } from '../../prototype_config/config.js';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -43,19 +41,17 @@ const styles = theme => ({
 class GroceryList extends React.Component {
   constructor(props) {
     super(props);
-    let groceryList = groceryItems;
-    groceryList.push({
-        id: null,
-        name: null,
-        qty: null,
-        checked: false,
-    });
 
     this.state = {
       stateChanged: false,
       newFoodItems: [{name: null, qty: null}],
       newFoodItemChecked: false,
-      groceryList
+      groceryList: [{
+        id: null,
+        name: null,
+        qty: null,
+        checked: false,
+      }]
     };
   }
 
@@ -66,11 +62,19 @@ class GroceryList extends React.Component {
     console.log(this.state.groceryList[i]);
   };
 
+  componentDidMount() {
+      axios.get('/groceries')
+          .then(response => {
+              console.log(response.data);
+              this.setState({groceryList: [...response.data, ...this.state.groceryList]});
+          });
+  }
+
   handleItemChange = (index) => event => {
     console.log("Hello");
     if (index == this.state.groceryList.length - 1) {
       let tempList = this.state.groceryList;
-      Object.assign(tempList[index], {id: tempList[index - 1].id + 1, name: event.target.value});
+      Object.assign(tempList[index], {id: tempList.length > 1 ? tempList[index - 1].id + 1 : 1, name: event.target.value});
       tempList.push({
         id: null,
         name: undefined,

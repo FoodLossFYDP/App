@@ -6,7 +6,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import KitchenOutlinedIcon from '@material-ui/icons/KitchenOutlined';
 import RoomServiceOutlinedIcon from '@material-ui/icons/RoomServiceOutlined';
 import ShoppingBasketOutlinedIcon from '@material-ui/icons/ShoppingBasketOutlined';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import './navbar.css';
 
 const styles = {
@@ -39,7 +39,7 @@ class AmbrNavigation extends React.Component {
         <BottomNavigationAction label="Fridge" icon={<KitchenOutlinedIcon />} />
         <BottomNavigationAction label="Groceries" icon={<ShoppingBasketOutlinedIcon /> } />
         <BottomNavigationAction label="Recipes" icon={<RoomServiceOutlinedIcon />} />
-        <BottomNavigationAction label="Settings" icon={<SettingsOutlinedIcon />} />
+        <BottomNavigationAction label="Dashboard" icon={<DashboardOutlinedIcon />} />
       </BottomNavigation>
     );
   }

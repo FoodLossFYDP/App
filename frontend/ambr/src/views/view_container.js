@@ -6,6 +6,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import Recipe from './recipes/recipes_view.js';
+import Dashboard from './dashboard/dashboard.js';
 
 const styles = theme => ({
     button: {
@@ -28,7 +29,7 @@ class ViewContainer extends React.Component {
         return (
             <div>
                 <SearchBar />
-                {view == 0 && <Inventory /> || view == 1 && <GroceryList /> || view == 2 && <Recipe />}
+                {view == 0 && <Inventory /> || view == 1 && <GroceryList /> || view == 2 && <Recipe /> || view == 3 && <Dashboard />}
             </div>
         );
     }

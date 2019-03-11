@@ -69,14 +69,14 @@ class InventoryList extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, inventory } = this.props;
     return (
       <List
         component="nav"
         className={classes.root}
       >
         {/* Reapeat these for each item in the inventory */}
-        {inventoryItems.map((inventoryItem,index) => (
+        {inventory.map((inventoryItem,index) => (
           <div>
             <Draggable
               axis='x'

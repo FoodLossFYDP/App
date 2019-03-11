@@ -46,7 +46,7 @@ class InventoryTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, inventory } = this.props;
 
     return (
       <div className={classes.root}>
@@ -67,7 +67,7 @@ class InventoryTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}><InventoryList /></TabContainer>
+          <TabContainer dir={theme.direction}><InventoryList inventory={inventory}/></TabContainer>
           <TabContainer dir={theme.direction}>Transactions</TabContainer>
         </SwipeableViews> 
       </div>

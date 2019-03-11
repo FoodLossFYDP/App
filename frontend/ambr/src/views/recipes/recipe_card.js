@@ -9,7 +9,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Recipe from './recipe.js';
-import { recipeItems } from '../../prototype_config/config.js';
 
 const styles = {
   card: {
@@ -35,10 +34,10 @@ class RecipeCard extends React.Component {
     };
   
   render() {
-    const { classes } = this.props;
+    const { classes, recipes } = this.props;
     return(
         <div>
-        {recipeItems.map(recipeItem => ( 
+        {recipes.map(recipeItem => ( 
             <Card className={classes.card}>
                 <CardActionArea onClick={() => this.handleClickOpen(recipeItem.recipe)}>
                     <CardMedia
