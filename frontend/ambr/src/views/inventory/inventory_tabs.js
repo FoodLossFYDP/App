@@ -67,7 +67,7 @@ class InventoryTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}><InventoryList inventory={inventory}/></TabContainer>
+          <TabContainer dir={theme.direction}><InventoryList inventory={inventory} onDelete={this.props.onDelete}/></TabContainer>
           <TabContainer dir={theme.direction}>Transactions</TabContainer>
         </SwipeableViews> 
       </div>

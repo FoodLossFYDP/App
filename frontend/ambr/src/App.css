@@ -28,7 +28,26 @@
   font-size: 25px;
   margin-bottom: 5px;
   margin-top: 15px;
+  display: inline-block;
+  float: left;
 } 
+
+.addButton {
+  display: inline-block;
+  float: right;
+  margin-top: 17px !important;
+  margin-right: 20px !important;
+  color: rgba(224, 111, 9, 0.66) !important;
+  padding: 0 !important;
+}
+
+.addIcon {
+  font-size: 30px !important;
+}
+
+.headerContainer {
+  height: 50px
+}
 
 @keyframes App-logo-spin {
   from {

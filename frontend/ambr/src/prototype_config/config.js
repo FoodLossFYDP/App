@@ -88,3 +88,26 @@ export const groceryItems = [
         checked: false,
     }
 ]
+
+export const foodItems = [
+    {"name":"apples","fridge":{"min":30,"max":60},"freezer":{"min":-1,"max":-1},"counter":{"min":7,"max":14},"tags":["produce", "fruit"]},
+    {"name":"avocados","fridge":{"min":7,"max":10},"freezer":{"min":-1,"max":-1},"counter":{"min":3,"max":4},"tags":["produce"]},
+    {"name":"blueberries","fridge":{"min":5,"max":10},"freezer":{"min":180,"max":240},"counter":{"min":2,"max":3},"tags":["produce", "fruit"]},
+    {"name":"bananas","fridge":{"min":2,"max":9},"freezer":{"min":60,"max":90},"counter":{"min":2,"max":7},"tags":["produce", "fruit"]},
+    {"name":"cherries","fridge":{"min":5,"max":10},"freezer":{"min":180,"max":240},"counter":{"min":2,"max":3},"tags":["produce", "fruit"]},
+    {"name":"coconut","fridge":{"min":14,"max":21},"freezer":{"min":180,"max":240},"counter":{"min":7,"max":7},"tags":["produce", "fruit"]},
+    {"name":"figs","fridge":{"min":5,"max":7},"freezer":{"min":180,"max":240},"counter":{"min":2,"max":5},"tags":["produce", "fruit"]},
+    {"name":"grapes","fridge":{"min":5,"max":10},"freezer":{"min":90,"max":150},"counter":{"min":3,"max":5},"tags":["produce", "fruit"]},
+    {"name":"lemons","fridge":{"min":30,"max":60},"freezer":{"min":-1,"max":-1},"counter":{"min":14,"max":24},"tags":["produce", "fruit"]},
+    {"name":"limes","fridge":{"min":30,"max":60},"freezer":{"min":-1,"max":-1},"counter":{"min":14,"max":24},"tags":["produce", "fruit"]},
+    {"name":"oranges","fridge":{"min":30,"max":60},"freezer":{"min":-1,"max":-1},"counter":{"min":14,"max":21},"tags":["produce", "fruit"]},
+    {"name":"peaches","fridge":{"min":4,"max":5},"freezer":{"min":180,"max":270},"counter":{"min":3,"max":4},"tags":["produce", "fruit"]},
+    {"name":"pineapple","fridge":{"min":4,"max":5},"freezer":{"min":90,"max":150},"counter":{"min":2,"max":3},"tags":["produce", "fruit"]},
+    {"name":"pomegranate","fridge":{"min":21,"max":21},"freezer":{"min":-1,"max":-1},"counter":{"min":null,"max":null},"tags":["produce", "fruit"]},
+    {"name":"strawberries","fridge":{"min":5,"max":7},"freezer":{"min":180,"max":240},"counter":{"min":1,"max":2},"tags":["produce", "fruit"]},
+    {"name":"tomatoes","fridge":{"min":14,"max":14},"freezer":{"min":-1,"max":-1},"counter":{"min":7,"max":7},"tags":["produce"]},
+    {"name":"asparagus","fridge":{"min":5,"max":7},"freezer":{"min":-1,"max":-1},"counter":{"min":null,"max":null},"tags":["produce","vegetable"]},
+    {"name":"broccoli","fridge":{"min":7,"max":14},"freezer":{"min":-1,"max":-1},"counter":{"min":null,"max":null},"tags":["produce","vegetable"]},
+    {"name":"carrots","fridge":{"min":28,"max":35},"freezer":{"min":-1,"max":-1},"counter":{"min":null,"max":null},"tags":["produce","vegetable"]},
+    {"name":"cauliflower","fridge":{"min":7,"max":21},"freezer":{"min":-1,"max":-1},"counter":{"min":null,"max":null},"tags":["produce","vegetable"]},
+]

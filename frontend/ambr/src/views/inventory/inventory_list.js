@@ -7,7 +7,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Divider } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 import ItemDialog from './food-item/item.js';
-import {inventoryItems} from '../../prototype_config/config.js';
 import Draggable from 'react-draggable';
 
 const styles = theme => ({
@@ -41,8 +40,13 @@ class InventoryList extends React.Component {
   state = {
     open: false,
     currentItem: {},
-    listItemPosition: {x:0,y:0}
+    listItemPosition: {x:0,y:0},
   };
+
+  constructor(props){
+    super(props);
+    console.log(props);
+  }
 
   handleClickOpen = (value) => {
     console.log(value);
@@ -53,19 +57,19 @@ class InventoryList extends React.Component {
     this.setState({ open: false });
   };
 
-  removeItem = (item, index) => {
-    inventoryItems.splice(index, index + 1);
+  removeItem = (index) => {
+    this.props.onDelete(index);
     // update master object
     // send delete request
   }
 
-  handleDragStop = (val, item, index) => {
-    if (val.changedTouches && val.changedTouches[0].clientX > 350) {
-      this.removeItem(item,index);
+  handleDrag = (index, e, ui) => {
+    console.log(index);
+    if (ui.x > 250) {
+      this.removeItem(index);
     } else {
       this.setState({listItemPosition: {x:0,y:0}})
     }
-
   }
 
   render() {
@@ -80,11 +84,11 @@ class InventoryList extends React.Component {
           <div>
             <Draggable
               axis='x'
-              onStop={val => this.handleDragStop(val, inventoryItem, index)}
               position={{x:0,y:0}}
+              onStop={(e, ui)=>this.handleDrag(index, e, ui)}
               bounds={{left: 0}}>
-              <ListItem button classes={{root: classes.listItem}} onClick={() => this.handleClickOpen(inventoryItem)}>
-                <ListItemText primary={inventoryItem.qty + " " + inventoryItem.item} secondary={inventoryItem.dateUpdated}/>
+              <ListItem button classes={{root: classes.listItem}} onClick={() => this.handleClickOpen(inventoryItem)} disableTouchRipple={true} disableFocusRipple={true}>
+                <ListItemText primary={inventoryItem.qty + " " + inventoryItem.item} secondary={new Date(inventoryItem.dateUpdated).toDateString()}/>
               </ListItem>
             </Draggable>
             <Divider />

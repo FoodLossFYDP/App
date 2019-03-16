@@ -15,6 +15,9 @@ const styles = theme => ({
     input: {
         display: 'none',
     },
+    viewContainer: {
+        paddingBottom: '52px'
+    }
     
 });
 
@@ -27,9 +30,12 @@ class ViewContainer extends React.Component {
         const { classes } = this.props;
         const view = this.props.view;
         return (
-            <div>
-                <SearchBar />
-                {view == 0 && <Inventory /> || view == 1 && <GroceryList /> || view == 2 && <Recipe /> || view == 3 && <Dashboard />}
+            <div className={`${classes.viewContainer}`}>
+                <SearchBar view={view}/>
+                {view == 0 && <Inventory inventory={this.props.inventory} deleteItem={this.props.deleteItem}/> || 
+                view == 1 && <GroceryList /> || 
+                view == 2 && <Recipe /> || 
+                view == 3 && <Dashboard />}
             </div>
         );
     }

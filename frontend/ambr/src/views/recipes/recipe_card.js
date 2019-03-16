@@ -13,6 +13,7 @@ import Recipe from './recipe.js';
 const styles = {
   card: {
     width: '92%',
+    marginBottom: '10px',
   },
   media: {
     height: 140,
