@@ -7,3 +7,5 @@ backend/app.yaml
 backend/config.json
 backend/static/
 backend/templates/
+backend/__pycache__/
+backend/MongoDB/__pycache__/

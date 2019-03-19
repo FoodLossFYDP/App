@@ -10,9 +10,13 @@ from pprint import pprint
 with open('config.json') as f:
     data = json.load(f)
 
-client = pymongo.MongoClient("mongodb+srv://"+data['mongo_user']+":"+data['mongo_password']+"@ambrdb-qchw8.mongodb.net/test?retryWrites=true",
-            ssl=True,
-            ssl_cert_reqs=ssl.CERT_NONE)
+# client = pymongo.MongoClient("mongodb+srv://"+data['mongo_user']+":"+data['mongo_password']+"@ambrdb-qchw8.mongodb.net/test?retryWrites=true",
+#             ssl=True,
+#             ssl_cert_reqs=ssl.CERT_NONE)
+client = pymongo.MongoClient("mongodb://"+data['mongo_user']+":"+data['mongo_password']+"@ambrdb-shard-00-00-qchw8.mongodb.net:27017,ambrdb-shard-00-01-qchw8.mongodb.net:27017,ambrdb-shard-00-02-qchw8.mongodb.net:27017/test?ssl=true&replicaSet=AmbrDB-shard-0&authSource=admin&retryWrites=true")
+
+# db = client.test
+
 
 db = client.Dev_DB
 

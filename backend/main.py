@@ -13,6 +13,8 @@ import mongo_conn as mc
 
 app = Flask(__name__)
 
+mongo_inventory = mc.Inventory
+
 inventory_hardcoded = [
     {
         'houseId': "20652932",
@@ -361,38 +363,46 @@ def update_inventory():
     logging.info(food_items)
     logging.info(food_quantities)
     logging.info(action)
-    if food_quantity_ambiguous == 'some' and action == 'insert':
-        backend_inventory[food_items[0]] = ""
-    elif food_quantity_ambiguous == 'all' and action == 'remove':
-        backend_inventory.pop(food_items[0], None)
-    else:
-        for food_item, food_quantity in zip(food_items, food_quantities):
-            if food_item in backend_inventory and action == 'insert':
-                new_quantity = backend_inventory[food_item] + food_quantity
-                backend_inventory[food_item] = new_quantity
-            elif food_item in backend_inventory and action == 'remove':
-                new_quantity = backend_inventory[food_item] - food_quantity
-                backend_inventory[food_item] = new_quantity
+    i = dict()
+    i["item"] = food_item
+    i["qty"] = food_quantity
+    i['uncertainQty'] = True
+    i['updateQtySuggestions'] = [1,2,3]
+    i["houseId"] = 1
+    for food_item, food_quantity in zip(food_items, food_quantities):
+        query = {"item":food_item,"houseId":i["houseId"]}
+        result = ""
+        if mongo_inventory.find(query).count():
+            if action == 'insert':
+                i["Action"] = "Added to Inventory"
+                if food_quantity_ambiguous != None:
+                    result = mongo_inventory.update(query, {"$inc":{"qty":-1}})
+                else:
+                    result = mongo_inventory.update(query, {"$inc":{"qty":i["qty"]}})
             else:
-                backend_inventory[food_item] = food_quantity
-            i = dict()
-            i["item"] = food_item
-            i["qty"] = food_quantity
-            i['uncertainQty'] = True
-            i['updateQtySuggestions'] = [1,2,3]
-            i["houseId"] = 1
-
-            query = {"item":food_item,"houseId":i["houseId"]}
-            result = ""
-            if Inventory.find(query).count():
-                result = Inventory.update(query, {"$inc":{"qty":i["qty"]}})
-            else:
-                result = Inventory.insert_one(i)
-            logging.info(result)
+                i["Action"] = "Removed from Inventory"
+                result = mongo_inventory.update(query, {"$inc":{"qty":-i["qty"]}})
+        else:
             i["Action"] = "Added to Inventory"
-            History.insert_one(i)
-    logging.info(backend_inventory)
-    return json.dumps({'speech': 'Thank you.', 'type': 0}), 200, {'ContentType':'application/json'}
+            result = mongo_inventory.insert_one(i)
+        logging.info(result)
+        mc.History.insert_one(i)
+    return json.dumps({
+        "payload": {
+            "google": {
+            "expectUserResponse": True,
+            "richResponse": {
+                "items": [
+                {
+                    "simpleResponse": {
+                    "textToSpeech": "Anything else?"
+                    }
+                }
+                ]
+            }
+            }
+        }
+    }), 200, {'ContentType':'application/json'}
 
 @app.route("/inventory", methods=['GET'])
 def inventory():
