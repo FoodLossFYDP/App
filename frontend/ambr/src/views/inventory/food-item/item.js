@@ -53,18 +53,9 @@ class ItemDialog extends React.Component {
             fullWidth
         >
             <DialogContent>
-                <h1 className={`${classes.dialogTitle} ${classes.dialogText}`}>{value.qty + " " + value.item}</h1>
+                <h1 className={`${classes.dialogTitle} ${classes.dialogText}`}>{value.qty > 0 ? value.qty + " " + (value.measurement || "") + " " + value.item: "Some"  + " " + value.item}</h1>
                 {value.expiringSoon && <p className={`${classes.dialogExpiry} ${classes.dialogText}`}>Expiring Soon</p>}
-                <p className={`${classes.dialogEntryDate} ${classes.dialogText}`}>{value.dateUpdated}</p>
-                {
-                    value.uncertainQty && 
-                    <div className={`${classes.dialogText}`}>
-                        <p className={`${classes.dialogConfirmQty} ${classes.dialogText}`}>How many {value.item} are left?</p>
-                        {value.updateQtySuggestions.map(qty => (
-                            <Button onClick={() => this.updateItemQuantity(qty)}>{qty}</Button>
-                        ))}
-                    </div>
-                }
+                <p className={`${classes.dialogEntryDate} ${classes.dialogText}`}>{new Date(parseInt(value.dateUpdated)*1000).toDateString()}</p>
             </DialogContent>
             <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>

@@ -7,6 +7,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Divider } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import axios from 'axios';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   root: {
@@ -35,6 +37,9 @@ const styles = theme => ({
   },
   lastItem: {
     color: '#c4c2c2'
+  },
+  deleteButton: {
+    marginLeft: '110px',
   }
 });
 
@@ -44,11 +49,11 @@ class GroceryList extends React.Component {
 
     this.state = {
       stateChanged: false,
-      newFoodItems: [{name: null, qty: null}],
+      newFoodItems: [{item: null, qty: null}],
       newFoodItemChecked: false,
       groceryList: [{
-        id: null,
-        name: null,
+        itemId: 1000,
+        item: null,
         qty: null,
         checked: false,
       }]
@@ -63,21 +68,23 @@ class GroceryList extends React.Component {
   };
 
   componentDidMount() {
-      axios.get('/groceries')
+      axios.get('/get_grocery_list?houseId=1')
           .then(response => {
-              console.log(response.data);
               this.setState({groceryList: [...response.data, ...this.state.groceryList]});
           });
   }
 
   handleItemChange = (index) => event => {
-    console.log("Hello");
     if (index == this.state.groceryList.length - 1) {
       let tempList = this.state.groceryList;
-      Object.assign(tempList[index], {id: tempList.length > 1 ? tempList[index - 1].id + 1 : 1, name: event.target.value});
+      console.log("=======");
+      console.log(tempList);
+      tempList[index] = {...tempList[index], ...{item: event.target.value}};
+      console.log("ITEM CHANGE");
+      console.log(tempList[index]);
       tempList.push({
-        id: null,
-        name: undefined,
+        itemId: this.state.groceryList.length + 1,
+        item: undefined,
         qty: null,
         checked: false,
       });
@@ -85,52 +92,78 @@ class GroceryList extends React.Component {
       this.setState({groceryList: tempList});
     } else {
       let tempList = this.state.groceryList;
-      tempList[index] = {...tempList[index], ...{name: event.target.value}};
+      tempList[index] = {...tempList[index], ...{item: event.target.value}};
+      let update_id = index + 1;
+      axios.get('/update_grocery_list?houseId=1&item='+tempList[index].item+'&itemId='+update_id)
+          .then(response => {
+              console.log(response.data);
+              this.setState({groceryList: [...response.data, ...this.state.groceryList]});
+          });
       this.setState({groceryList: this.state.groceryList})
     }
   };
 
+  removeItem = (index) => {
+    let tempList = this.state.groceryList;
+    axios.get('/remove_from_grocery_list?houseId=1&item='+tempList[index].item)
+          .then(response => {
+              console.log(response.data);
+              this.setState({groceryList: [...response.data, {
+                itemId: this.state.groceryList.length + 1,
+                item: undefined,
+                qty: null,
+                checked: false,
+              }]});
+          });
+  };
+
   handleClick = index => {
-    console.log(this.state.groceryList[index]);
-    if (this.state.groceryList[index].name == undefined) {
+    if (this.state.groceryList[index].item == undefined) {
       this.setState({
         groceryList: [
           ...this.state.groceryList.splice(0, index),
-          {...this.state.groceryList[index], name: ""},
+          {...this.state.groceryList[index], item: ""},
           ...this.state.groceryList.splice(index + 1)
         ],
         focusedItem: index
       })
     }
-  }
+    console.log("CLick");
+    console.log(this.state.groceryList);
+  };
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={`${classes.groceryContainer}`}>
         <List className={classes.root}>
           {this.state.groceryList.map((value, index) => (
               <div>
-            <ListItem key={value.id} role={undefined} dense >
-              <Checkbox
-                className={`${index==this.state.groceryList.length -1 && classes.lastItem}`}
-                checked={value.checked}
-                tabIndex={-1}
-                disableRipple
-                button 
-                onClick={this.handleToggle(index)}
-              />
-              <InputBase className={`${classes.margin} ${index==this.state.groceryList.length -1 && classes.lastItem}`} 
-                value={value.name}  
-                defaultValue="Add new food item"
-                onChange={this.handleItemChange(index)}
-                onClick={() => this.handleClick(index)}
-                autoFocus={this.state.focusedItem == index}
-              />
-            </ListItem>
-            <Divider />
-            </div>
+                  <ListItem key={value.id} role={undefined} dense >
+                    <Checkbox
+                      className={`${index==this.state.groceryList.length -1 && classes.lastItem}`}
+                      checked={value.checked}
+                      tabIndex={-1}
+                      disableRipple
+                      button 
+                      onClick={this.handleToggle(index)}
+                    />
+                    <InputBase className={`${classes.margin} ${index==this.state.groceryList.length -1 && classes.lastItem}`} 
+                      value={value.item}  
+                      defaultValue="Add new food item"
+                      onChange={this.handleItemChange(index)}
+                      onClick={() => this.handleClick(index)}
+                      autoFocus={this.state.focusedItem == index}
+                    />
+                    {index!=this.state.groceryList.length -1 && 
+                      <IconButton aria-label="Delete" className={`${classes.deleteButton}`}>
+                        <DeleteOutlinedIcon className="addIcon" onClick={() => this.removeItem(index)}/>
+                      </IconButton>
+                    }
+                     
+                  </ListItem>
+                  <Divider />
+                </div>
           ))}
         </List>
         {/* <Button variant="contained" color="primary" className={`${classes.button} ${classes.addItemButton}`}>

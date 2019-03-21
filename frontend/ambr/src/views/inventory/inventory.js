@@ -2,6 +2,7 @@ import React from 'react';
 import InventoryTabs from './inventory_tabs.js';
 import { withStyles } from '@material-ui/core/styles';
 import { getInventory } from '../../requests/fetch_inventory.js';
+import axios from 'axios';
 
 
 const styles = theme => ({
@@ -19,6 +20,14 @@ class Inventory extends React.Component {
             
         };
     };
+
+    componentDidMount() {
+        console.log("Getting inventory data...");
+        axios.get('/get_inventory?houseId=1')
+        .then(response => {
+            this.props.handleInventoryUpdate(response.data);
+        });
+    }
 
     render () {
         return (

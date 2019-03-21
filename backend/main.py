@@ -4,14 +4,17 @@ import logging
 import os
 import sys
 import pymongo
-import datetime
+from datetime import datetime
 import time
+import pprint
 from datetime import timedelta
 import bson.json_util as bjson
 sys.path.insert(0, os.path.dirname(os.path.abspath("main.py"))+"/MongoDB")
 import mongo_conn as mc
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
+mongo_inventory = mc.Inventory
 
 inventory_hardcoded = [
     {
@@ -254,7 +257,6 @@ inventory = {}
 
 @app.route("/", methods=['GET'])
 def main():
-    match_recipes([0,1,1,1,0],[0,1,1,0,1])
     return render_template('index.html')
 
 @app.route("/transactions", methods=['GET'])
@@ -286,6 +288,8 @@ def testr():
 def get_inventory():
     houseId = int(request.args.get("houseId"))
     data = mc.get_the_inventory(houseId)
+    logging.info("INVENTORY DATA: ==============")
+    logging.info(data)
     return data, 200, {'ContentType':'application/json'}
 
 @app.route("/add_inventory", methods=['GET'])
@@ -293,7 +297,9 @@ def add_inventory():
     obj = { "houseId":int(request.args.get("houseId")),
             "username":str(request.args.get("username")),
             "item":str(request.args.get("item")).lower(),
-            "qty":int(request.args.get("qty"))}
+            "qty":float(request.args.get("qty")),
+            "measurement":str(request.args.get("measurement")),
+            "dateUpdated": datetime.fromtimestamp(int(request.args.get("dateUpdated"))/1000)}
     mc.add_to_the_inventory(obj)
     return get_inventory()
 
@@ -302,10 +308,16 @@ def remove_inventory():
     obj = { "houseId":int(request.args.get("houseId")),
             "username":str(request.args.get("username")),
             "item":str(request.args.get("item")).lower(),
-            "qty":int(request.args.get("qty"))}
+            "qty":float(request.args.get("qty"))}
     mc.remove_from_the_inventory(obj)
     return get_inventory()
 
+@app.route("/delete_inventory", methods=['GET'])
+def delete_inventory():
+    obj = { "houseId":int(request.args.get("houseId")),
+            "item":str(request.args.get("item")).lower()}
+    mc.delete_from_the_inventory(obj)
+    return get_inventory()
 
 """___________________ GROCERY LIST ___________________________________________"""
 
@@ -313,24 +325,38 @@ def remove_inventory():
 def get_grocery_list():
     houseId = int(request.args.get("houseId"))
     data = mc.get_the_grocery_list(houseId)
+    logging.info("=================Grocery List====================")
+    logging.info(data)
     return data, 200, {'ContentType':'application/json'}
 
 @app.route("/add_to_grocery_list", methods=['GET'])
 def add_to_grocery_list():
     obj = { "houseId":int(request.args.get("houseId")),
             "item":str(request.args.get("item")).lower(),
-            "qty":int(request.args.get("qty"))}
+            "itemId":float(request.args.get("itemId"))}
     mc.add_to_the_grocery_list(obj)
     return get_grocery_list()
 
 @app.route("/remove_from_grocery_list", methods=['GET'])
 def remove_from_grocery_list():
     obj = { "houseId":int(request.args.get("houseId")),
-            "item":str(request.args.get("item")).lower(),
-            "qty":int(request.args.get("qty"))}
+            "item":str(request.args.get("item")).lower()}
     mc.remove_from_the_grocery_list(obj)
     return get_grocery_list()
 
+@app.route("/update_grocery_list", methods=['GET'])
+def update_grocery_list():
+    obj = { "houseId":int(request.args.get("houseId")),
+            "item":str(request.args.get("item")).lower(),
+            "itemId": str(request.args.get("itemId"))}
+    query = {"itemId":obj["itemId"], "houseId":obj["houseId"]}
+    db_item = mc.Grocery_List.find(query).count()
+    if db_item == 0:
+        mc.add_to_the_grocery_list(obj)
+        return {}, 200, {'ContentType':'application/json'}
+    else:
+        result = mc.Grocery_List.update(query, {"$set":{"item":obj["item"]}})
+        return json.dumps({}), 200, {'ContentType':'application/json'}
 
 """ ________________ History ___________________________________________________"""
 @app.route("/history", methods=['GET'])
@@ -347,51 +373,157 @@ backend_inventory = {}
 @app.route("/update", methods=['POST'])
 def update_inventory():
     content = json.loads(request.data)
+    logging.info("======================")
+    logging.info("======================")
+    logging.info(content['queryResult']['intent'])
+    if content['queryResult']['intent']['displayName'] == 'Clarify intent':
+        if content['queryResult']['parameters']['unknown'] == 'unknown':
+            return json.dumps({
+                "payload": {
+                    "google": {
+                    "expectUserResponse": True,
+                    "richResponse": {
+                        "items": [
+                        {
+                            "simpleResponse": {
+                            "textToSpeech": "Ok. Anything else?"
+                            }
+                        }
+                        ]
+                    }
+                    }
+                }
+            }), 200, {'ContentType':'application/json'}
+        else:
+            food_item = content["queryResult"]["outputContexts"][0]['parameters']["food"][0]
+            query = {"item":food_item,"houseId":1}
+            result = mongo_inventory.update(query, {"$set":{"qty":content["queryResult"]["parameters"]["number"]}})
+            logging.info("Updated item " + food_item)
+            logging.info("Result.............")
+            logging.info(result)
+            return json.dumps({
+                "payload": {
+                    "google": {
+                    "expectUserResponse": True,
+                    "richResponse": {
+                        "items": [
+                        {
+                            "simpleResponse": {
+                            "textToSpeech": "Thank you. Anything else?"
+                            }
+                        }
+                        ]
+                    }
+                    }
+                }
+            }), 200, {'ContentType':'application/json'}
+
     food_items = content['queryResult']['parameters']['food']
     food_quantities = None
     food_quantity_ambiguous = None
     action = content['queryResult']['parameters']['action']
-    logging.info(action)
-    logging.info(food_items)
     if 'number' in content['queryResult']['parameters'].keys():
         food_quantities = content['queryResult']['parameters']['number'] if content['queryResult']['parameters']['number'] != "" else None
     if 'amount' in content['queryResult']['parameters'].keys():
         food_quantity_ambiguous = content['queryResult']['parameters']['amount'] if content['queryResult']['parameters']['amount'] != "" else None
-    logging.info(food_items)
-    logging.info(food_quantities)
-    logging.info(action)
-    if food_quantity_ambiguous == 'some' and action == 'insert':
-        backend_inventory[food_items[0]] = ""
-    elif food_quantity_ambiguous == 'all' and action == 'remove':
-        backend_inventory.pop(food_items[0], None)
-    else:
-        for food_item, food_quantity in zip(food_items, food_quantities):
-            if food_item in backend_inventory and action == 'insert':
-                new_quantity = backend_inventory[food_item] + food_quantity
-                backend_inventory[food_item] = new_quantity
-            elif food_item in backend_inventory and action == 'remove':
-                new_quantity = backend_inventory[food_item] - food_quantity
-                backend_inventory[food_item] = new_quantity
-            else:
-                backend_inventory[food_item] = food_quantity
-            i = dict()
-            i["item"] = food_item
-            i["qty"] = food_quantity
-            i['uncertainQty'] = True
-            i['updateQtySuggestions'] = [1,2,3]
-            i["houseId"] = 1
-
-            query = {"item":food_item,"houseId":i["houseId"]}
-            result = ""
-            if Inventory.find(query).count():
-                result = Inventory.update(query, {"$inc":{"qty":i["qty"]}})
-            else:
-                result = Inventory.insert_one(i)
-            logging.info(result)
+    logging.info("items " + str(food_items))
+    logging.info("quantities " + str(food_quantities))
+    logging.info("action " + action)
+    if food_quantity_ambiguous != None:
+        food_item = food_items[0]
+        i = dict()
+        i["item"] = food_item
+        i["qty"] = -1
+        i['uncertainQty'] = True
+        i['updateQtySuggestions'] = [1,2,3]
+        i["houseId"] = 1
+        if action == 'insert':
             i["Action"] = "Added to Inventory"
-            History.insert_one(i)
-    logging.info(backend_inventory)
-    return json.dumps({'speech': 'Thank you.', 'type': 0}), 200, {'ContentType':'application/json'}
+            logging.info("Ambiguous")
+            logging.info("item add")
+            result = mongo_inventory.update({"item":food_item,"houseId":i["houseId"]}, {'$set': {"qty":-1}})
+            mc.History.insert_one(i)
+        else:
+            i["Action"] = "Removed from Inventory"
+            logging.info("Ambiguous")
+            logging.info("item remove")
+            result = mongo_inventory.update({"item":food_item,"houseId":i["houseId"]}, {'$set': {"qty":-1}})
+            mc.History.insert_one(i)
+            return json.dumps({
+            "payload": {
+                "google": {
+                "expectUserResponse": True,
+                "richResponse": {
+                    "items": [
+                        {
+                            "simpleResponse": {
+                                "textToSpeech": "How many "+ i["item"] +"s are left?"
+                            }
+                        }
+                    ]
+                }
+                }
+            }
+        }), 200, {'ContentType':'application/json'}
+    for food_item, food_quantity in zip(food_items, food_quantities):
+        i = dict()
+        i["item"] = food_item
+        i["qty"] = food_quantity
+        i['uncertainQty'] = False
+        i['updateQtySuggestions'] = [1,2,3]
+        i["houseId"] = 1
+        i["dateUpdated"] = time.time()
+        query = {"item":food_item,"houseId":i["houseId"]}
+        result = ""
+
+        if mongo_inventory.find(query).count():
+            db_item = mongo_inventory.find(query)[0]
+            logging.info("DB ITEM COUNT: ")
+            logging.info(db_item["qty"])
+            count = db_item["qty"]
+            if action == 'insert':
+                i["Action"] = "Added to Inventory"
+                logging.info("Update add")
+                logging.info(i["qty"])
+                if count < 0:
+                    result = mongo_inventory.update(query, {"$set":{"qty":-1, "dateUpdated":time.time()}})
+                else:
+                    result1 = mongo_inventory.update(query, {"$inc":{"qty":i["qty"]},"$set":{"dateUpdated":time.time()}})
+            else:
+                logging.info("Update remove")
+                logging.info(i["qty"])
+                logging.info(count)
+                if count < 0:
+                    result = mongo_inventory.update(query, {"$set":{"qty":-1,"dateUpdated":time.time()}})
+                else:
+                    result = mongo_inventory.update(query, {"$inc":{"qty":-i["qty"]},"$set":{"dateUpdated":time.time()}})
+                new_quantity = mongo_inventory.find_one(query)['qty']
+                logging.info(new_quantity)
+                if new_quantity == 0:
+                    mongo_inventory.delete_one(query)
+                if new_quantity < 0:
+                    mongo_inventory.find_one(query)['qty'] = -1
+        else:
+            i["Action"] = "Added to Inventory"
+            result = mongo_inventory.insert_one(i)
+        logging.info(result)
+        mc.History.insert_one(i)
+    return json.dumps({
+        "payload": {
+            "google": {
+            "expectUserResponse": True,
+            "richResponse": {
+                "items": [
+                {
+                    "simpleResponse": {
+                    "textToSpeech": "Anything else?"
+                    }
+                }
+                ]
+            }
+            }
+        }
+    }), 200, {'ContentType':'application/json'}
 
 @app.route("/inventory", methods=['GET'])
 def inventory():
