@@ -396,10 +396,12 @@ def update_inventory():
                 }
             }), 200, {'ContentType':'application/json'}
         else:
-            food_item = content["queryResult"]["outputContexts"][0]['parameters']["food.original"]
+            food_item = content["queryResult"]["outputContexts"][0]['parameters']["food"][0]
             query = {"item":food_item,"houseId":1}
             result = mongo_inventory.update(query, {"$set":{"qty":content["queryResult"]["parameters"]["number"]}})
             logging.info("Updated item " + food_item)
+            logging.info("Result.............")
+            logging.info(result)
             return json.dumps({
                 "payload": {
                     "google": {
@@ -440,12 +442,30 @@ def update_inventory():
             i["Action"] = "Added to Inventory"
             logging.info("Ambiguous")
             logging.info("item add")
+            result = mongo_inventory.update({"item":food_item,"houseId":i["houseId"]}, {'$set': {"qty":-1}})
+            mc.History.insert_one(i)
         else:
             i["Action"] = "Removed from Inventory"
             logging.info("Ambiguous")
             logging.info("item remove")
-        result = mongo_inventory.update({"item":food_item,"houseId":i["houseId"]}, {'$set': {"qty":-1}})
-        mc.History.insert_one(i)
+            result = mongo_inventory.update({"item":food_item,"houseId":i["houseId"]}, {'$set': {"qty":-1}})
+            mc.History.insert_one(i)
+            return json.dumps({
+            "payload": {
+                "google": {
+                "expectUserResponse": True,
+                "richResponse": {
+                    "items": [
+                        {
+                            "simpleResponse": {
+                                "textToSpeech": "How many "+ i["item"] +"s are left?"
+                            }
+                        }
+                    ]
+                }
+                }
+            }
+        }), 200, {'ContentType':'application/json'}
     for food_item, food_quantity in zip(food_items, food_quantities):
         i = dict()
         i["item"] = food_item
