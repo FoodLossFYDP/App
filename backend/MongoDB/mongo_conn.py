@@ -10,6 +10,10 @@ from pprint import pprint
 with open('config.json') as f:
     data = json.load(f)
 
+try:
+    pass
+except Exception as e:
+    raise
 client = pymongo.MongoClient("mongodb+srv://"+data['mongo_user']+":"+data['mongo_password']+"@ambrdb-qchw8.mongodb.net/test?retryWrites=true",
             ssl=True,
             ssl_cert_reqs=ssl.CERT_NONE)
@@ -51,13 +55,17 @@ def remove_from_the_inventory(obj):
     if Inventory.find(query).count():
         Inventory.update(query, {"$inc":{"qty":-obj["qty"]}})
         new_quantity = Inventory.find_one(query)['qty']
-        if new_quantity <= 0:
+        if new_quantity == 0:
             Inventory.delete_one(query)
+        if new_quantity < 0:
+            Inventory.find(query)[0]['qty'] = -1
     obj["Action"] = "Added {} {} to the Inventory".format(obj["qty"],obj["item"])
     History.insert_one(obj)
     return
 
+
 """___________________ GROCERY LIST ____________________________________________"""
+
 
 def get_the_grocery_list(houseId):
     s = list(Grocery_List.find({"houseId":houseId}))
@@ -67,6 +75,7 @@ def get_the_grocery_list(houseId):
     print(s)
     data = bjson.dumps(s)
     return data
+
 
 def add_to_the_grocery_list(obj):
     data = {"houseId":obj["houseId"],"item":obj["item"],"qty":obj["qty"]}
@@ -78,6 +87,7 @@ def add_to_the_grocery_list(obj):
     obj["Action"] = "Added {} {} to grocery list".format(obj["qty"],obj["item"])
     History.insert_one(obj)
     return
+
 
 def remove_from_the_grocery_list(obj):
     data = {"houseId":obj["houseId"],"item":obj["item"],"qty":obj["qty"]}
@@ -94,7 +104,9 @@ def remove_from_the_grocery_list(obj):
     History.insert_one(data)
     return
 
+
 """___________________ HISTORY _________________________________________________"""
+
 
 def get_historical_data(obj):
     s = list(History.find({"houseId":houseId}))
@@ -102,6 +114,16 @@ def get_historical_data(obj):
 def DELETE_HISTORY(obj):
     s = list(History.find({"houseId":houseId}))
 
+def get_fridge_state_vector(houseId):
+    fridge_vector = []
+    for food in list(Food_Items.find()):
+        item = food['name']
+        if Inventory.find({"item":item,"houseId":houseId}).count():
+            quantity = Inventory.find({"item":item,"houseId":houseId})[0]['qty']
+            fridge_vector.append(quantity)
+        else:
+            fridge_vector.append(0)
+    return fridge_vector
 
-
-# client.close()
+def get_recipe_vectors(houseId):
+    

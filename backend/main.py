@@ -117,10 +117,10 @@ recipes_hardcoded = [
         ],
         'ingredients': [
           "1 bunch (about 6 ounces) kale leaves, stems discarded",
-          "2 to 3 Tbsp. olive oil", 
+          "2 to 3 Tbsp. olive oil",
           "1/2 cup plus 2 Tbsp. olive oil, plus more for drizzling",
           "Kosher salt",
-	        "Pinch of chili flakes", 
+	        "Pinch of chili flakes",
 	        "Salt and pepper to taste"
         ]
       }
@@ -138,11 +138,11 @@ recipes_hardcoded = [
           "Once carrots and garlic have cooled, add to processor and finish blending until smooth. Scoop into a bowl, drizzle with olive oil, season with paprika, and serve with chips. Hummus will keep in an airtight container in the fridge for up to 7 days.",
         ],
         'ingredients': [
-          "4 medium carrots (about 14 ounces), peeled and chopped into quarters", 
-          "1 1/2 tsp. sweet paprika, divided, plus more for seasoning", 
+          "4 medium carrots (about 14 ounces), peeled and chopped into quarters",
+          "1 1/2 tsp. sweet paprika, divided, plus more for seasoning",
           "1/2 cup plus 2 Tbsp. olive oil, plus more for drizzling",
           "Kosher salt",
-	  "3 garlic cloves, peeled", 
+	  "3 garlic cloves, peeled",
 	  "2 (15-ounce) cans chickpeas, drained and rinsed",
 	  "3 Tbsp. tahini",
 	  "Juice of 2 to 3 lemons",
@@ -163,15 +163,15 @@ recipes_hardcoded = [
           "Place whipping cream and 2 teaspoons sugar in a medium bowl, and beat with a mixer at high speed until stiff peaks form. Fold in 1 teaspoon Chambord. Serve whipped cream over fruit, and sprinkle evenly with almonds.",
         ],
         'ingredients': [
-          "1/3 cup water", 
-          "5 tablespoons sugar", 
+          "1/3 cup water",
+          "5 tablespoons sugar",
           "1/4 cup Chambord (raspberry-flavored liqueur)",
           "2 tablespoons fresh lemon juice"
-	  "2 cups diced nectarines", 
+	  "2 cups diced nectarines",
 	  "1 cup pitted and halved sweet cherries",
 	  "1 cup sliced strawberries",
           "1 cup fresh raspberries",
-	  "1 cup fresh blueberries", 
+	  "1 cup fresh blueberries",
 	  "1/3 cup whipping cream",
           "2 teaspoons sugar",
 	  "1 teaspoon Chambord (raspberry-flavored liqueur)",
@@ -187,15 +187,15 @@ recipes_hardcoded = [
         'recipeName': "Lemon and Garlic Broccoli",
         'recipeId': "0006",
         'steps': [
-          "Place broccoli florets in a large skillet over medium heat. Stir 2 teaspoons lemon juice into water in a small bowl and pour the mixture into the skillet. Cover and steam until broccoli is bright green and tender, 10 to 15 minutes", 
+          "Place broccoli florets in a large skillet over medium heat. Stir 2 teaspoons lemon juice into water in a small bowl and pour the mixture into the skillet. Cover and steam until broccoli is bright green and tender, 10 to 15 minutes",
           "While broccoli is steaming, melt butter in a small saucepan over medium-low heat and stir in garlic and salt; turn heat to low and let the garlic gently fry until golden brown, about 8 minutes. Drain water from cooked broccoli and return to skillet; sprinkle with 2 more teaspoons lemon juice and the butter and garlic mixture. Sprinkle broccoli with black pepper, toss to combine, and season with a bit more pepper if desired."
         ],
         'ingredients': [
-          "1 pound broccoli, separated into florets", 
-          "2 teaspoons fresh lemon juice", 
+          "1 pound broccoli, separated into florets",
+          "2 teaspoons fresh lemon juice",
           "2 tablespoons water",
           "3 tablespoons butter"
-	  "2 cloves garlic, minced", 
+	  "2 cloves garlic, minced",
 	  "1 pinch salt",
 	  "2 teaspoons lemon juice",
           "1 teaspoon ground black pepper",
@@ -210,15 +210,15 @@ recipes_hardcoded = [
         'recipeName': "Butternut Squash Soup",
         'recipeId': "0007",
         'steps': [
-          "Melt the butter in a large pot, and cook the onion, celery, carrot, potatoes, and squash 5 minutes, or until lightly browned. Pour in enough of the chicken stock to cover vegetables. Bring to a boil. Reduce heat to low, cover pot, and simmer 40 minutes, or until all vegetables are tender.", 
+          "Melt the butter in a large pot, and cook the onion, celery, carrot, potatoes, and squash 5 minutes, or until lightly browned. Pour in enough of the chicken stock to cover vegetables. Bring to a boil. Reduce heat to low, cover pot, and simmer 40 minutes, or until all vegetables are tender.",
           "Transfer the soup to a blender, and blend until smooth. Return to pot, and mix in any remaining stock to attain desired consistency. Season with salt and pepper."
         ],
         'ingredients': [
-          "2 tablespoons butter", 
-          "1 small onion, chopped", 
+          "2 tablespoons butter",
+          "1 small onion, chopped",
           "1 stalk celery, chopped",
           "1 medium carrot, chopped"
-	  "2 medium potatoes, cubed", 
+	  "2 medium potatoes, cubed",
 	  "1 medium butternut squash - peeled, seeded and cubed",
 	  "1 container (32 fluid ounce) chicken stock",
           "Salt and freshly grounded black better to taste"
@@ -233,12 +233,12 @@ recipes_hardcoded = [
         'recipeName': "Basil Berry Lemonade Sorbet",
         'recipeId': "0008",
         'steps': [
-          "In medium saucepan, combine sugar and 1 cup water. Heat on high until sugar dissolves, stirring occasionally. Add basil. Remove from heat, cover and let stand 15 minutes. Strain syrup into medium bowl, discarding basil. Refrigerate until cold.", 
+          "In medium saucepan, combine sugar and 1 cup water. Heat on high until sugar dissolves, stirring occasionally. Add basil. Remove from heat, cover and let stand 15 minutes. Strain syrup into medium bowl, discarding basil. Refrigerate until cold.",
           "In blender, pureeberries, lemon juice and cooled basil syrup until smooth. Transfer to metal 8-inch square baking pan. Cover with plastic wrap and freeze only until firm enough to scoop (about 2 hours). If sorbet is too hard to scoop, let stand at room temperature until slightly thawed"
         ],
         'ingredients': [
-          "1 cup sugar", 
-          "1 cup lightly packed fresh basil", 
+          "1 cup sugar",
+          "1 cup lightly packed fresh basil",
           "6 cups fresh mixed berries",
           "3/4 cup lemon juice (from about 4 lemons)"
         ]
@@ -342,7 +342,6 @@ def get_history():
 
 """ ________________ HARD_CODED ________________________________________________"""
 backend_inventory = {}
-
 
 
 @app.route("/update", methods=['POST'])

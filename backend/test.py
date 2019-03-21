@@ -1,7 +1,6 @@
 from main import app
 from main import *
 import unittest
-import logging
 
 """ UNIT TESTING FOR FLASK"""
 
@@ -41,6 +40,8 @@ class FlaskTestCase(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get('/remove_from_grocery_list?houseId=1&item=Zucchini&qty=1&username=Ali Akram',content_type = 'application/json')
         self.assertEqual(response.status_code, 200)
+
+    """ ADD Recipe matching unit tests """
 
 
 if __name__ == '__main__':
