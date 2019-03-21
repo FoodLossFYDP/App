@@ -149,7 +149,6 @@ def get_fridge_state_vector(houseId):
                 fridge_vector[food['food_index']] = item['qty']
     return fridge_vector
 
-
 def get_the_recipes_vector():
     recipes_arr = list(Recipes.find())
     food_items = list(Food_Items.find({}, {"name":1,"fridge":1, '_id':0, 'food_index':1}))
@@ -170,7 +169,7 @@ def get_recipes():
     return recipes_arr
 
 
-# print(get_fridge_state_vector(1))
+print(get_fridge_state_vector(1))
 # print(get_the_recipes_vector()[0])
 
 

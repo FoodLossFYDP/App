@@ -49,13 +49,19 @@ def match_recipes(houseId):
         rankings = sorted(rankings, key=lambda x : x[0])
     print(rankings)
     recipe_arr = mc.get_recipes()
+    # return_arr = [0]*len(rankings)
     return_arr = []
     for idx, val in rankings:
+        print(val)
+        print(recipe_arr[val]['recipe']['recipeName'])
         return_arr.append(recipe_arr[val])
     return return_arr
-
-
 
 def get_expiry_day(food_index):
     qty = Food_Items.find({"food_index":food_index})[0]['fridge']['min']
     return qty
+
+# print(json.dumps(mc.get_recipes()[1]['recipe']['recipeName']))
+
+
+match_recipes(1)

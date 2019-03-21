@@ -537,9 +537,8 @@ def groceries():
 @app.route("/recipes", methods=['GET'])
 def recipes(houseId=1):
     return json.dumps(mr.match_recipes(houseId)), 200, {'ContentType':'application/json'}
+
     # return json.dumps(recipes_hardcoded), 200, {'ContentType':'application/json'}
-
-
 # print(mr.match_recipes(1))
 # def match_recipes(inventory_list, recipe):
 #     remainder_vector = []
