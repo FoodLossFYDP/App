@@ -32,7 +32,7 @@ class ViewContainer extends React.Component {
         return (
             <div className={`${classes.viewContainer}`}>
                 <SearchBar view={view}/>
-                {view == 0 && <Inventory inventory={this.props.inventory} deleteItem={this.props.deleteItem}/> || 
+                {view == 0 && <Inventory inventory={this.props.inventory} deleteItem={this.props.deleteItem} handleInventoryUpdate={this.props.handleInventoryUpdate}/> || 
                 view == 1 && <GroceryList /> || 
                 view == 2 && <Recipe /> || 
                 view == 3 && <Dashboard />}

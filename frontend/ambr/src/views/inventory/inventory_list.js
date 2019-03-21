@@ -88,7 +88,10 @@ class InventoryList extends React.Component {
               onStop={(e, ui)=>this.handleDrag(index, e, ui)}
               bounds={{left: 0}}>
               <ListItem button classes={{root: classes.listItem}} onClick={() => this.handleClickOpen(inventoryItem)} disableTouchRipple={true} disableFocusRipple={true}>
-                <ListItemText primary={inventoryItem.qty + " " + inventoryItem.item} secondary={new Date(inventoryItem.dateUpdated).toDateString()}/>
+                <ListItemText primary={
+                  inventoryItem.qty > 0 ? inventoryItem.qty + " " + (inventoryItem.measurement || "") + " " + inventoryItem.item
+                : "Some"  + " " + inventoryItem.item}
+                 secondary={new Date(parseInt(inventoryItem.dateUpdated)*1000).toDateString()}/>
               </ListItem>
             </Draggable>
             <Divider />

@@ -6,6 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 
 const styles = theme => ({
@@ -34,10 +39,8 @@ const styles = theme => ({
     },
     addButton: {
         width: '80%',
-        position: 'absolute',
-        bottom: '66px',
         left: '10%',
-
+        marginTop: '10%'
     }
   });
 
@@ -52,6 +55,7 @@ class AddItemDialog extends React.Component {
 
   handleItemQtyChange = event => {
       //call function that updates quantity
+      console.log("Item quantity: " + event.target.value);
       this.setState({itemQty: event.target.value});
   };
 
@@ -59,8 +63,12 @@ class AddItemDialog extends React.Component {
       this.setState({itemName: event.target.value});
   };
 
+  handleMeasurementChange = event => {
+      this.setState({ itemMeasurement: event.target.value })
+  }
+
   addItem = () => {
-      this.props.addItem(this.state.itemName,this.state.itemQty);
+      this.props.addItem(this.state.itemName, this.state.itemQty, this.state.itemMeasurement);
       this.handleClose();
   }
 
@@ -69,7 +77,7 @@ class AddItemDialog extends React.Component {
       this.state = {
           itemName: "",
           itemQty: 0,
-          itemMeasurement: "count",
+          itemMeasurement: "",
       }
   }
   render() {
@@ -103,6 +111,27 @@ class AddItemDialog extends React.Component {
                     margin="normal"
                     variant="outlined"
                 />
+                <h3>Measurement</h3>
+                <FormControl variant="outlined" className={classes.textField}>
+                    <Select
+                        value={this.state.itemMeasurement}
+                        onChange={this.handleMeasurementChange}
+                        input={
+                        <OutlinedInput
+                            labelWidth={this.state.labelWidth}
+                            name="itemMeasurement"
+                            id="outlined-age-simple"
+                        />
+                        }
+                    >
+                        <MenuItem value="">
+                        <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={'Lbs'}>Lbs</MenuItem>
+                        <MenuItem value={'Kgs'}>Kgs</MenuItem>
+                        <MenuItem value={'Packs'}>Packs</MenuItem>
+                    </Select>
+                </FormControl>
                 <Button className={classes.addButton} color="ecefef" onClick={this.addItem} variant="outlined">Add Item</Button>
             </DialogContent>
             <DialogActions>

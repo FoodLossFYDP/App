@@ -15,21 +15,25 @@ class App extends Component {
     super(props);
     this.state = {
       view: 0,
-      inventory: inventoryItems,
+      inventory: [],
       open: false,
     }
     this.handleViewChange = this.handleViewChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.handleInventoryUpdate = this.handleInventoryUpdate.bind(this);
   }
   handleViewChange(val) {
     this.setState({view: val});
   }
 
-  componentDidMount() {
-    axios.get('/get_inventory?houseId=1')
-        .then(response => {
-            this.setState({inventory: response.data || []});
-        });
+  handleInventoryUpdate(data) {
+    // data.dateUpdated = data.dateUpdated * 1000;
+    this.setState({inventory: data || []});
+  }
+
+  handleInventoryDelete(data) {
+    // data.dateUpdated = data.dateUpdated * 1000;
+    this.setState({inventory: data || []});
   }
 
   handleClose = () => {
@@ -38,15 +42,21 @@ class App extends Component {
 
   deleteItem = (index) => {
       let i = this.state.inventory;
-      i.splice(index, 1);
-      this.setState({inventory: i});
+      let a = i[index]
+      axios.get('/delete_inventory?item='+a.item+'&houseId=1')
+      .then(response => {
+          this.handleInventoryDelete(response.data);
+      });
+      // i.splice(index, 1);
+      // this.setState({inventory: i});
+     
   }
 
   handleAddItemClick = () => {
     this.setState({open: true});
   }
 
-  addItem = (itemname, itemqty) => {
+  addItem = (itemname, itemqty, itemMeasurement) => {
     //send request
     let inventory = this.state.inventory;
     console.log(itemname);
@@ -59,18 +69,21 @@ class App extends Component {
         inventory[i].qty = x + " " + unit;
       }
     }
-      let a = {
+    let a = {
         houseId: "20652932",
         qty: itemqty, 
         item: itemname, 
-        dateUpdated: "Added Monday, November 15", 
-        uncertainQty: true, 
+        dateUpdated: Date.now(), 
+        uncertainQty: false, 
+        measurement: itemMeasurement,
         tips: [], 
         updateQtySuggestions: [],
         expiringSoon: false,
     };
-    inventory.unshift(a);
-    this.setState(inventory);
+    axios.get('/add_inventory?qty='+a.qty+'&item='+a.item+'&dateUpdated='+a.dateUpdated+'&measurement='+a.measurement +'&houseId=1&username=xx')
+        .then(response => {
+            this.props.handleInventoryUpdate(response.data);
+        });
   }
 
   render() {
@@ -93,7 +106,7 @@ class App extends Component {
             </div>
             : null}
         </div>
-        <ViewContainer view={this.state.view} inventory={this.state.inventory} deleteItem={this.deleteItem}/>
+        <ViewContainer view={this.state.view} inventory={this.state.inventory} deleteItem={this.deleteItem} handleInventoryUpdate={this.handleInventoryUpdate}/>
         <Navigation onChange={this.handleViewChange}/>
       </div>
     );
