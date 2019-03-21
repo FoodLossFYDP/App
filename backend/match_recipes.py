@@ -52,13 +52,10 @@ def match_recipes(houseId):
     return_arr = []
     for idx, val in rankings:
         return_arr.append(recipe_arr[val])
-    return json.dumps(return_arr)
+    return return_arr
 
 
 
 def get_expiry_day(food_index):
     qty = Food_Items.find({"food_index":food_index})[0]['fridge']['min']
     return qty
-
-
-# print(match_recipes(1))
