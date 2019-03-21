@@ -9,6 +9,7 @@ import time
 import pprint
 from datetime import timedelta
 import bson.json_util as bjson
+import match_recipes as mr
 sys.path.insert(0, os.path.dirname(os.path.abspath("main.py"))+"/MongoDB")
 import mongo_conn as mc
 
@@ -534,15 +535,16 @@ def groceries():
     return json.dumps(groceries_hardcoded), 200, {'ContentType':'application/json'}
 
 @app.route("/recipes", methods=['GET'])
-def recipes():
-    return json.dumps(recipes_hardcoded), 200, {'ContentType':'application/json'}
+def recipes(houseId=1):
+    return json.dumps(mr.match_recipes(houseId)), 200, {'ContentType':'application/json'}
 
-def match_recipes(inventory_list, recipe):
-    remainder_vector = []
-    for inv_item, recipe_item in zip(inventory_list, recipe):
-        remainder_vector.append(inv_item - recipe_item)
-    missing_items = []
-    for index, item in enumerate(remainder_vector):
-        if item < 0:
-            missing_items.append(index)
-    print(missing_items)
+
+# def match_recipes(inventory_list, recipe):
+#     remainder_vector = []
+#     for inv_item, recipe_item in zip(inventory_list, recipe):
+#         remainder_vector.append(inv_item - recipe_item)
+#     missing_items = []
+#     for index, item in enumerate(remainder_vector):
+#         if item < 0:
+#             missing_items.append(index)
+#     print(missing_items)
