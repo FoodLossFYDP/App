@@ -8,10 +8,8 @@ import bson.json_util as bjson
 from pprint import pprint
 import logging
 import os
-
 with open('config.json') as f:
     data = json.load(f)
-
 
 # client = pymongo.MongoClient("mongodb+srv://"+data['mongo_user']+":"+data['mongo_password']+"@ambrdb-qchw8.mongodb.net/test?retryWrites=true",
 #             ssl=True,
@@ -29,6 +27,7 @@ Inventory = db.Inventory
 History = db.History
 Users = db.Users
 Grocery_List = db.Grocery_List
+Recipes = db.Recipes
 
 
 """ ________________ INVENTORY _________________________________________________"""
@@ -93,6 +92,8 @@ def get_the_grocery_list(houseId):
     data = bjson.dumps(s)
     return data
 
+
+# REPEATED CODE
 # def add_to_the_grocery_list(obj):
 #     data = {"houseId":obj["houseId"],"item":obj["item"],"qty":obj["qty"]}
 #     query = {"item":obj["item"],"houseId":obj["houseId"]}
@@ -139,14 +140,38 @@ def DELETE_HISTORY(obj):
     s = list(History.find({"houseId":houseId}))
 
 def get_fridge_state_vector(houseId):
-    fridge_vector = []
-    for food in list(Food_Items.find()):
-        item = food['name']
-        if Inventory.find({"item":item,"houseId":houseId}).count():
-            quantity = Inventory.find({"item":item,"houseId":houseId})[0]['qty']
-            fridge_vector.append(quantity)
-        else:
-            fridge_vector.append(0)
+    inventory = list(Inventory.find({"houseId":houseId}))
+    food_items = list(Food_Items.find({}, {"name":1,"fridge":1, '_id':0, 'food_index':1}))
+    fridge_vector = [0]*len(food_items)
+    for id_inv,item in enumerate(inventory):
+        for id_food, food in enumerate(food_items):
+            if food['name']  == item['item']:
+                fridge_vector[food['food_index']] = item['qty']
     return fridge_vector
+
+
+def get_the_recipes_vector():
+    recipes_arr = list(Recipes.find())
+    food_items = list(Food_Items.find({}, {"name":1,"fridge":1, '_id':0, 'food_index':1}))
+    recipe_matrix = []
+    for id_r,recipe_obj in enumerate(recipes_arr):
+        recipe_vector = [0]*len(food_items)
+        recipe_ingredients = recipe_obj['recipe']['ingredients']
+        for id_ingr, ingredient in enumerate(recipe_ingredients):
+            for id_food, food in enumerate(food_items):
+                if food['name'] == ingredient['item']:
+                    recipe_vector[food['food_index']] = ingredient['qty']
+        recipe_matrix.append(recipe_vector)
+    return recipe_matrix
+
+
+def get_recipes():
+    recipes_arr = list(Recipes.find({},{"_id":0}))
+    return recipes_arr
+
+
+# print(get_fridge_state_vector(1))
+# print(get_the_recipes_vector()[0])
+
 
 # def get_recipe_vectors(houseId):
