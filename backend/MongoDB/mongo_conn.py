@@ -7,9 +7,11 @@ import time
 import bson.json_util as bjson
 from pprint import pprint
 import logging
+import os
 
 with open('config.json') as f:
     data = json.load(f)
+
 
 # client = pymongo.MongoClient("mongodb+srv://"+data['mongo_user']+":"+data['mongo_password']+"@ambrdb-qchw8.mongodb.net/test?retryWrites=true",
 #             ssl=True,
@@ -147,4 +149,4 @@ def get_fridge_state_vector(houseId):
             fridge_vector.append(0)
     return fridge_vector
 
-def get_recipe_vectors(houseId):
+# def get_recipe_vectors(houseId):

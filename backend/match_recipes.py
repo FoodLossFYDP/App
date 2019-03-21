@@ -2,13 +2,11 @@ import numpy as np
 import math
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.abspath("match_recipes.py"))+"/MongoDB")
+sys.path.insert(0, os.path.dirname(os.path.abspath("main.py"))+"/MongoDB")
 import mongo_conn as mc
 
 Inventory = mc.Inventory
 Food_Items = mc.Food_Items
-
-
 
 
 Ingredients = [1,1,1,1,1]
@@ -50,6 +48,6 @@ def get_expiry_day(food_index):
     qty = Food_Items.find({"food_index":food_index})[0]['fridge']['min']
     return qty
 
-def recipes_vectors = 
+
 
 print(match_recipes(Ingredients, Recipes,1))
